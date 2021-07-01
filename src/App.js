@@ -24,10 +24,32 @@ function App() {
     },
   ]);
 
+  // Delete task
+  const deleteTask = (id) => {
+    // Filter out/remove the task whose id matches the parameter, keep the remaining // // ones.
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
+  // Toggle reminder
+  const toggleReminder = (id) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, reminder: !task.reminder } : task
+      )
+    );
+    console.log("toggled reminder");
+  };
+
+  // We passed the tasks array (which is a state) into the Tasks component
+
   return (
     <div className="container">
       <Header title="Task Tracker" />
-      <Tasks tasks={tasks} />
+      {tasks.length > 0 ? (
+        <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
+      ) : (
+        <h3>No Tasks</h3>
+      )}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import Task from './Task';
 /* 
 {tasks.map((task) => (
     <h3>{task.text}</h3>
@@ -7,11 +8,17 @@ the code above uses the tasks array and then turns each "task" in into an h3 and
 
 */
 
-const Tasks = ({ tasks }) => {
+
+const Tasks = ({ tasks, onDelete, onToggle }) => {
     return (
         <>
             {tasks.map((task) => (
-                <h3 key={task.id}>{task.text}</h3>
+                <Task
+                    key={task.id}
+                    task={task}
+                    onDelete={onDelete}
+                    onToggle={onToggle}
+                />
             ))}
         </>
     )
