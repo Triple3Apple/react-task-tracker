@@ -1,8 +1,14 @@
-import Header from "./components/Header";
-import Tasks from "./components/Tasks";
 import { useState } from "react";
 
+import Header from "./components/Header";
+import Tasks from "./components/Tasks";
+import AddTask from "./components/AddTask";
+
 function App() {
+  // showAddTask state will keep track of whether to display the form for adding tasks
+  const [showAddTask, setShowAddTask] = useState(false);
+
+  // tasks state keeps track of the tasks created
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -24,6 +30,21 @@ function App() {
     },
   ]);
 
+  // Add task
+  const addTask = (task) => {
+    // create an id based on the last tasks id, but make sure there is a task in the list first
+    const id = tasks.length > 0 ? tasks[tasks.length - 1].id + 1 : 1;
+    // const id = tasks.length + 1;
+
+    console.log(`new id: ${id}`);
+
+    const newTask = { id, ...task };
+
+    // Add the task to the tasks state
+    // Uses the spread operator to keep the original tasks values and then add newTask to the end
+    setTasks([...tasks, newTask]);
+  };
+
   // Delete task
   const deleteTask = (id) => {
     // Filter out/remove the task whose id matches the parameter, keep the remaining // // ones.
@@ -40,11 +61,20 @@ function App() {
     console.log("toggled reminder");
   };
 
-  // We passed the tasks array (which is a state) into the Tasks component
+  // Toggle Add Task form
+  const toggleAddTaskForm = () => {
+    setShowAddTask(!showAddTask);
+  };
 
+  // We passed the tasks array (which is a state) into the Tasks component.
+
+  // && is a shorter way of a ternary operator (?) that return nothing if false.
+  // Sooooo the && in he code below is used to check if showAddTask is true, if it is
+  // it will show the AddTask component.
   return (
     <div className="container">
-      <Header title="Task Tracker" />
+      <Header onAdd={toggleAddTaskForm} />
+      {showAddTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (
