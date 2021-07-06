@@ -20,8 +20,9 @@ body {
   border-radius: 5px;
 }
 
-.header {
+Header {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
@@ -58,7 +59,6 @@ body {
   background: #f4f4f4;
   margin: 5px;
   padding: 10px 20px;
-  cursor: pointer;
 }
 
 .task.reminder {
@@ -67,8 +67,19 @@ body {
 
 .task h3 {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+}
+
+.task-row-details {
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
+}
+
+.task-interactions {
+  display: flex;
+  justify-content: space-between;
+  width: 70px;
 }
 
 .add-form {
